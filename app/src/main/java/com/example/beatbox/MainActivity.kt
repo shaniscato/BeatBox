@@ -1,11 +1,11 @@
 package com.example.beatbox
 
 import android.annotation.SuppressLint
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.SeekBar
 import com.example.beatbox.databinding.ActivityMainBinding
@@ -20,16 +20,23 @@ class MainActivity : AppCompatActivity() {
 
         beatBox = BeatBox(assets)
 
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        val binding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.recyclerView.apply {
-            layoutManager = GridLayoutManager(context, 3)
+            layoutManager =
+                GridLayoutManager(context, 3)
             adapter = SoundAdapter(beatBox.sounds)
         }
-
+        //Volume seekbar
         binding.seekBar.setOnSeekBarChangeListener(@SuppressLint("AppCompatCustomView")
-        object: SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(
+                seekBar: SeekBar?,
+                progress: Int,
+                fromUser: Boolean
+            ) {
                 beatBox.volume = progress.toFloat() / 100
                 beatBox.changeVolume()
             }
@@ -48,21 +55,24 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         beatBox.release()
     }
-    private inner class SoundHolder(private val binding: ListItemSoundBinding):
-        RecyclerView.ViewHolder(binding.root){
-            init {
-                binding.viewModel = SoundViewModel(beatBox)
-            }
-            fun bind(sound: Sound){
-                binding.apply {
-                    viewModel?.sound = sound
-                    executePendingBindings()
-                    //forces layout to immediately update the binding data inside recyclerview
-                }
+
+    private inner class SoundHolder(private val binding: ListItemSoundBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.viewModel = SoundViewModel(beatBox)
+        }
+
+        fun bind(sound: Sound) {
+            binding.apply {
+                viewModel?.sound = sound
+                executePendingBindings()
+                //forces layout to immediately update the binding data inside recyclerview
             }
         }
-    private inner class SoundAdapter(private val sounds: List<Sound>):
-        RecyclerView.Adapter<SoundHolder>(){
+    }
+
+    private inner class SoundAdapter(private val sounds: List<Sound>) :
+        RecyclerView.Adapter<SoundHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoundHolder {
             val binding = DataBindingUtil.inflate<ListItemSoundBinding>(
                 layoutInflater,
@@ -70,14 +80,16 @@ class MainActivity : AppCompatActivity() {
                 parent,
                 false
             )
-        return SoundHolder(binding)
+            return SoundHolder(binding)
         }
 
         override fun onBindViewHolder(holder: SoundHolder, position: Int) {
             val sound = sounds[position]
             holder.bind(sound)
-            }
+        }
+
         //Hooking up the sound list to the main activity
         override fun getItemCount() = sounds.size
-        }
+    }
+
 }

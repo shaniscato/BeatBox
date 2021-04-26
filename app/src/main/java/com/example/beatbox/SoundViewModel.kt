@@ -1,7 +1,7 @@
 package com.example.beatbox
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 
 class SoundViewModel(private val beatBox: BeatBox) : BaseObservable(){
     fun onButtonClicked() {
