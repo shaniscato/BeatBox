@@ -4,7 +4,7 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.SoundPool
 import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.view.*
+//import kotlinx.android.synthetic.main.activity_main.view.*
 import java.io.IOException
 
 private const val TAG = "BeatBox"

@@ -13,5 +13,6 @@
         android:layout_height="120dp"
         android:onClick="@{() -> viewModel.onButtonClicked()}"
         android:text="@{viewModel.title}"
-        tools:text="Sound name"/>
+        tools:text="Sound name"
+        android:layout_margin="5dp"/>
 </layout>

@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.appcompat.app.AlertDialog
 import com.example.beatbox.databinding.ActivityMainBinding
 import com.example.beatbox.databinding.ListItemSoundBinding
 
@@ -42,13 +44,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
             }
         })
+        binding.colorSettings.setOnClickListener {view: View ->
+            var colorPreferences = ColorChooserFragment()
+            colorPreferences.show(supportFragmentManager, "themeDialog")
+        }
     }
 
     override fun onDestroy() {

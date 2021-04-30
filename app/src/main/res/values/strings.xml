@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">BeatBox</string>
     <string name="volume">Volume</string>
+    <string name="colorsettings">ColorSettings</string>
+    <string name="volumeIcon">ColorSettings</string>
+    <string name="chooseColor">Choose a theme:</string>
+    <string name="defaultTheme">System Default</string>
+    <string name="lightTheme">Light Theme</string>
+    <string name="darkTheme">Dark Theme</string>
+    <string name="acceptText">Accept</string>
+    <string name="cancelText">Cancel</string>
 </resources>
