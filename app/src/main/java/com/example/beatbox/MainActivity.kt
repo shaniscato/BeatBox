@@ -1,31 +1,40 @@
 package com.example.beatbox
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.beatbox.databinding.ActivityMainBinding
 import com.example.beatbox.databinding.ListItemSoundBinding
+import kotlinx.android.synthetic.main.fragment_color_chooser.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var beatBox: BeatBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var theme = 0
+        val appThemePrefs: SharedPreferences = getSharedPreferences("AppThemePrefs",0)
+        theme = appThemePrefs.getInt("Theme", theme)
+        AppCompatDelegate.setDefaultNightMode(theme)
         super.onCreate(savedInstanceState)
 
         beatBox = BeatBox(assets)
 
-
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+
+        val TAG = "MainActivity"
         binding.recyclerView.apply {
             layoutManager =
                 GridLayoutManager(context, 3)
@@ -49,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
         })
-        binding.colorSettings.setOnClickListener {view: View ->
+        binding.colorSettings.setOnClickListener { view: View ->
             var colorPreferences = ColorChooserFragment()
             colorPreferences.show(supportFragmentManager, "themeDialog")
         }

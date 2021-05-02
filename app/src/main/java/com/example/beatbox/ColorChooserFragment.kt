@@ -1,6 +1,8 @@
 package com.example.beatbox
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,9 @@ class ColorChooserFragment: DialogFragment() {
     ): View? {
         var rootView: View = inflater.inflate(R.layout.fragment_color_chooser, container, false)
 
+        val appThemePrefs: SharedPreferences = this.activity!!.getSharedPreferences("AppThemePrefs",0)
+        val sharedPrefsEdit: SharedPreferences.Editor = appThemePrefs.edit()
+
         rootView.cancelButton.setOnClickListener {
             dismiss()
         }
@@ -35,12 +40,11 @@ class ColorChooserFragment: DialogFragment() {
                 else -> AppCompatDelegate.MODE_NIGHT_YES
             }
             AppCompatDelegate.setDefaultNightMode(theme)
+            sharedPrefsEdit.putInt("Theme", theme)
+            sharedPrefsEdit.apply()
             Toast.makeText(context,"Theme: $themeText", Toast.LENGTH_LONG).show()
-//
-
             dismiss()
         }
         return rootView
     }
-
 }
